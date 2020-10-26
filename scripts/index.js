@@ -18,3 +18,5 @@ function setUpBoard() {
     ctx.lineTo(200, 100);
     ctx.stroke();
 }
+
+window.onload = setUpBoard();
