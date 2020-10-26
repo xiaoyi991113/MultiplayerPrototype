@@ -11,21 +11,22 @@ let gameState = [
     [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK],
 ];
 
-let players = {
-    player1: {
-        id: 1,
-        letter: squareStates.X
-    },
-    player2: {
-        id: 2,
-        letter: squareStates.O
-    }
+let player1, player2;
+
+function Player(id, letter) {
+    this.id = id;
+    this.letter = letter;
+}
+
+function SquareLocation(horizontalPosition, verticalPosition) {
+    this.horizontalPosition = horizontalPosition;
+    this.verticalPosition = verticalPosition;
 };
 
-let squareLocation = {
-    horizontalPosition: 0,
-    verticalPosition: 0
-};
+function setUpGame() {
+    setUpBoard();
+    makePlayers();
+}
 
 function setUpBoard() {
     var c = document.getElementById("myCanvas");
@@ -41,8 +42,13 @@ function setUpBoard() {
     ctx.stroke();
 }
 
-function markSquare(playerId, location) {
-
+function makePlayers() {
+    player1 = new Player(1, squareStates.X);
+    player2 = new Player(2, squareStates.O);
 }
 
-window.onload = setUpBoard();
+function markSquare(playerId, location) {
+    console.log(gameState);
+}
+
+window.onload = setUpGame();
