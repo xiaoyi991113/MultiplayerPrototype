@@ -22,7 +22,7 @@ let players = {
     }
 };
 
-let location = {
+let squareLocation = {
     horizontalPosition: 0,
     verticalPosition: 0
 };
