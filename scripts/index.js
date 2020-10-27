@@ -1,6 +1,11 @@
 
 let boardSize = 300;
 let lineWidth = 1;
+let letterMargin = 10;
+
+function squareWidth() {
+    return boardSize/3;
+}
 
 let squareStates = {
     BLANK: null, 
@@ -50,17 +55,36 @@ function setUpBoard() {
     ctx.lineTo(300, 200);
     ctx.stroke();
     
+    
+}
+
+function drawX(squareLocation) {
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(c.width, c.height);
+    ctx.moveTo(
+        squareLocation.horizontalPosition * squareWidth() + letterMargin,
+        squareLocation.verticalPosition * squareWidth() + letterMargin
+        );
+    ctx.lineTo(
+        squareLocation.horizontalPosition * squareWidth() + squareWidth() - letterMargin,
+        squareLocation.verticalPosition * squareWidth() + squareWidth() - letterMargin
+        );
     ctx.stroke();
 
-    
-    ctx.lineWidth = 1;
+    // ctx.beginPath();
+    // ctx.moveTo(c.width/3 - 10, 0);
+    // ctx.lineTo(0, c.height/3 - 10);
+    // ctx.stroke();
+
     ctx.beginPath();
-    ctx.moveTo(c.width, 0);
-    ctx.lineTo(0, c.height);
+    ctx.moveTo(
+        squareLocation.horizontalPosition * squareWidth() + squareWidth() - letterMargin,
+        squareLocation.verticalPosition * squareWidth() + letterMargin
+        );
+    ctx.lineTo(
+        squareLocation.horizontalPosition * squareWidth() + letterMargin,
+        squareLocation.verticalPosition * squareWidth() + squareWidth() - letterMargin
+        );
     ctx.stroke();
 }
 
