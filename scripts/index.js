@@ -58,7 +58,7 @@ function setUpBoard() {
     ctx.stroke();
     
     ctx.moveTo(0, 0);
-    ctx.arc(100/2, 75/2, 50/2, 0, 2 * Math.PI);
+    ctx.arc(c.height/2, c.width/2, 50/2, 0, 2 * Math.PI);
     ctx.fill();
 }
 
