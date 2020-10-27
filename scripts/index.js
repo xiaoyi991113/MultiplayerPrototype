@@ -118,6 +118,7 @@ function makePlayers() {
 
 function markSquare(player, squareLocation) {
     gameState[squareLocation.horizontalPosition][squareLocation.verticalPosition] = player.letter;
+    checkGameState();
     renderState();
 }
 
@@ -173,7 +174,7 @@ function checkGameState() {
     for(i = 0; i < 3; i++){
         for(j = 0; j < 3; j++){
             if(gameState[i][j] != null){
-                return
+                return;
             }
         }
     }
