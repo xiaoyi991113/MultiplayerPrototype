@@ -86,6 +86,10 @@ function drawX(squareLocation) {
         squareLocation.verticalPosition * squareWidth() + squareWidth() - letterMargin
         );
     ctx.stroke();
+    
+    ctx.moveTo(0, 0);
+    ctx.arc(c.height/2, c.width/2, 50/2, 0, 2 * Math.PI);
+    ctx.fill();
 }
 
 function makePlayers() {
