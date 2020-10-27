@@ -1,4 +1,7 @@
 
+let boardSize = 300;
+let lineWidth = 1;
+
 let squareStates = {
     BLANK: null, 
     O: 0,
@@ -32,6 +35,9 @@ function setUpGame() {
 function setUpBoard() {
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
+
+    ctx.lineWidth = 1;
+
     ctx.moveTo(100, 0);
     ctx.lineTo(100, 300);
     ctx.moveTo(200, 0);
