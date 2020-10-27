@@ -6,9 +6,10 @@ let squareStates = {
 };
 
 let gameState = [
-    [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK],
-    [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK],
-    [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK],
+    // Column 0          Column 1            Column 2
+    [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK], // Horizontal row 0
+    [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK], // Horizontal row 1
+    [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK], // Horizontal row 2
 ];
 
 let player1, player2;
@@ -47,8 +48,8 @@ function makePlayers() {
     player2 = new Player(2, squareStates.O);
 }
 
-function markSquare(playerId, location) {
-    console.log(gameState);
+function markSquare(player, squareLocation) {
+    gameState[squareLocation.horizontalPosition][squareLocation.verticalPosition] = player.letter;
 }
 
 window.onload = setUpGame();
