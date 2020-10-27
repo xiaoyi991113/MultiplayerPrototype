@@ -56,6 +56,10 @@ function setUpBoard() {
     ctx.moveTo(c.width, 0);
     ctx.lineTo(0, c.height);
     ctx.stroke();
+    
+    ctx.moveTo(0, 0);
+    ctx.arc(100/2, 75/2, 50/2, 0, 2 * Math.PI);
+    ctx.fill();
 }
 
 function makePlayers() {
