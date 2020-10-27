@@ -20,6 +20,15 @@ let gameState = [
     [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK], // Horizontal row 2
 ];
 
+let testGameState = [
+    // Column 0          Column 1            Column 2
+    [squareStates.X, squareStates.BLANK, squareStates.O], // Horizontal row 0
+    [squareStates.O, squareStates.X, squareStates.BLANK], // Horizontal row 1
+    [squareStates.X, squareStates.BLANK, squareStates.BLANK], // Horizontal row 2
+];
+
+//gameState = testGameState;
+
 let player1, player2;
 
 function Player(id, letter) {
@@ -32,14 +41,20 @@ function SquareLocation(horizontalPosition, verticalPosition) {
     this.verticalPosition = verticalPosition;
 };
 
+function getCanvCtxt() {
+    var c = document.getElementById("myCanvas");
+    return c.getContext("2d");
+}
+
 function setUpGame() {
     setUpBoard();
     makePlayers();
+    // TODO: Decide if the state really needs to be rendered here
+    renderState();
 }
 
 function setUpBoard() {
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
+    let ctx = getCanvCtxt();
 
     ctx.lineWidth = 1;
 
@@ -54,11 +69,11 @@ function setUpBoard() {
     ctx.moveTo(0, 200);
     ctx.lineTo(300, 200);
     ctx.stroke();
-    
-    
 }
 
 function drawX(squareLocation) {
+    let ctx = getCanvCtxt();
+
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(
@@ -71,11 +86,6 @@ function drawX(squareLocation) {
         );
     ctx.stroke();
 
-    // ctx.beginPath();
-    // ctx.moveTo(c.width/3 - 10, 0);
-    // ctx.lineTo(0, c.height/3 - 10);
-    // ctx.stroke();
-
     ctx.beginPath();
     ctx.moveTo(
         squareLocation.horizontalPosition * squareWidth() + squareWidth() - letterMargin,
@@ -86,9 +96,16 @@ function drawX(squareLocation) {
         squareLocation.verticalPosition * squareWidth() + squareWidth() - letterMargin
         );
     ctx.stroke();
-    
-    ctx.moveTo(0, 0);
-    ctx.arc(c.height/2, c.width/2, 50/2, 0, 2 * Math.PI);
+}
+
+function drawO(sqLoc) {
+    let ctx = getCanvCtxt();
+
+    ctx.moveTo(sqLoc.horizontalPosition + letterMargin, sqLoc.verticalPosition + letterMargin);
+    ctx.arc(
+        sqLoc.horizontalPosition * squareWidth() + squareWidth()/2,
+        sqLoc.verticalPosition * squareWidth() + squareWidth()/2, 
+        (squareWidth() - 2 * letterMargin)/2, 0, 2 * Math.PI);
     ctx.fill();
 }
 
@@ -99,6 +116,27 @@ function makePlayers() {
 
 function markSquare(player, squareLocation) {
     gameState[squareLocation.horizontalPosition][squareLocation.verticalPosition] = player.letter;
+    renderState();
+}
+
+function renderState() {
+    for (let rIndex = 0; rIndex <= 2; rIndex++) {
+        for (let cIndex = 0; cIndex <= 2; cIndex++) {
+            if (gameState[rIndex][cIndex] === squareStates.X) {
+                // cIndex is horizontal position because it's the number of columns over
+                // rIndex is vertical position because it's the number of rows down
+                drawX(new SquareLocation(cIndex, rIndex));
+                console.log(rIndex + ", " + cIndex + " is X");
+            }
+            else if (gameState[rIndex][cIndex] === squareStates.O) {
+                drawO(new SquareLocation(cIndex, rIndex));
+                console.log(rIndex + ", " + cIndex + " is O");
+            }
+            else {
+                console.log(rIndex + ", " + cIndex + " is empty");
+            }
+        }
+    }
 }
 
 window.onload = setUpGame();
