@@ -31,9 +31,12 @@ function setUpGame() {
     makePlayers();
 }
 
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
 function setUpBoard() {
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
+    // var c = document.getElementById("myCanvas");
+    // var ctx = c.getContext("2d");
     ctx.moveTo(100, 0);
     ctx.lineTo(100, 300);
     ctx.moveTo(10,10);
@@ -44,23 +47,29 @@ function setUpBoard() {
     ctx.lineTo(300, 100);
     ctx.moveTo(0, 200);
     ctx.lineTo(300, 200);
-    ctx.stroke();
-    
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(c.width, c.height);
-    ctx.stroke();
+   //cross
+    ctx.moveTo(0,0);
+    ctx.lineTo(100,100);
+    ctx.moveTo(100,0);
+    ctx.lineTo(0,100);
 
-    
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(c.width, 0);
-    ctx.lineTo(0, c.height);
     ctx.stroke();
     
-    ctx.moveTo(0, 0);
-    ctx.arc(c.height/2, c.width/2, 50/2, 0, 2 * Math.PI);
+
+    //circle
+    ctx.moveTo(150,150);
+    ctx.arc(c.height/2, c.width/2, 40, 0, 2 * Math.PI);
+    ctx.fill();
+}
+
+function drawCircle(event){
+    var rect = c.getBoundingClientRect();
+    var posx = event.clientX - rect.left;
+    var posy = event.clientY - rect.top;
+
+    ctx.fillStyle = "#000000";
+    ctx.beginPath();
+    ctx.arc(posx, posy, 40, 0, 2 * Math.PI);
     ctx.fill();
 }
 
@@ -113,4 +122,5 @@ function checkGameState() {
     }
     gameCondition = 3;
 }
+
 window.onload = setUpGame();
