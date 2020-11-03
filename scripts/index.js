@@ -89,13 +89,6 @@ function setUpBoard() {
 }
 
 function processClick(event){
-    var rect = c.getBoundingClientRect();
-    var posx = event.clientX - rect.left;
-    var posy = event.clientY - rect.top;
-
-}
-
-function drawCircle(event){
     var c = document.getElementById("myCanvas");
     let ctx = getCanvCtxt();
 
@@ -104,25 +97,24 @@ function drawCircle(event){
     var posy = event.clientY - rect.top;
 
     if(posx < 100){
-        posx = 50;
+        posx = 0;
     } else if( posx < 200){
-        posx = 150;
+        posx = 1;
     } else{
-        posx = 250;
+        posx = 2;
     }
 
     if(posy < 100){
-        posy = 50;
+        posy = 0;
     } else if( posy < 200){
-        posy = 150;
+        posy = 1;
     } else{
-        posy = 250;
+        posy = 2;
     }
-    
-    ctx.fillStyle = "#000000";
-    ctx.beginPath();
-    ctx.arc(posx, posy, 40, 0, 2 * Math.PI);
-    ctx.stroke();
+    var location = new SquareLocation(posx, posy);
+    currentPlayer = counter();
+    markSquare(currentPlayer, location);
+ 
 }
 
 /**
