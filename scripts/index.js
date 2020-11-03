@@ -1,3 +1,18 @@
+// ENUMERATIONS
+// A Square can have an X, an O, or be blank. Use this enum to denote the state
+let squareStates = {
+    BLANK: null, 
+    O: 0,
+    X: 1
+};
+
+// 0 for no winner, 1 for O, 2 for X, 3 for Draw
+let WIN_STATES = {
+    NO_WINNER: 0,
+    O_WIN: 1,
+    X_WIN: 2,
+    DRAW: 3
+};
 
 // PREDEFINED CONSTANTS
 // Width of the board, in pixels
@@ -9,14 +24,7 @@ let letterMargin = 10;
 
 //GLOBAL VARIABLES
 let player1, player2;
-
-//ENUMERATIONS
-// A Square can have an X, an O, or be blank. Use this enum to denote the state
-let squareStates = {
-    BLANK: null, 
-    O: 0,
-    X: 1
-};
+let winState = WIN_STATES.NO_WINNER;
 
 // This is the official starting state of the game. Everything is blank.
 let gameState = [
@@ -37,14 +45,7 @@ let testGameState = [
 // Uncomment this line to start with the testing game state
 //gameState = testGameState;
 
-// 0 for no winner, 1 for O, 2 for X, 3 for Draw
-let WIN_STATES = {
-    NO_WINNER: 0,
-    O_WIN: 1,
-    X_WIN: 2,
-    DRAW: 3
-};
-let winState = WIN_STATES.NO_WINNER;
+// OBJECT CONSTRUCTORS 
 
 // Constructor for Player Object
 function Player(id, letter) {
@@ -58,6 +59,9 @@ function SquareLocation(horizontalPosition, verticalPosition) {
     this.horizontalPosition = horizontalPosition;
     this.verticalPosition = verticalPosition;
 };
+
+
+// NORMAL FUNCTIONS
 
 // Simple utility function to get the width of the board
 function squareWidth() {
@@ -190,6 +194,13 @@ function markSquare(player, squareLocation) {
     }
 }
 
+function getPlayerFromWinState(A_WIN_STATE) {
+    if (A_WIN_STATE == WIN_STATES.O_WIN
+        && player1.letter) {
+    }
+}
+
+// If a win ocurrs, alert the players!
 function checkHandleWin() {
     setWinState();
     if (winState === WIN_STATES.O_WIN) {
