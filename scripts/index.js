@@ -55,6 +55,7 @@ function SquareLocation(horizontalPosition, verticalPosition) {
 // Simple utility function to get the width of the board
 function squareWidth() {
     return boardSize/3;
+}
 
 // Utility function to get the contect object for the canvas
 function getCanvCtxt() {
