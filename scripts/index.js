@@ -88,6 +88,7 @@ function setUpBoard() {
     ctx.stroke();
 }
 
+//Processes a click from index.html
 function processClick(event){
     var c = document.getElementById("myCanvas");
     let ctx = getCanvCtxt();
