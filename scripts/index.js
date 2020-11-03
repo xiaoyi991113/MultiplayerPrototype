@@ -7,11 +7,12 @@ let lineWidth = 1;
 // Margin, in pixels, between the X or O drawn and the boundaries of the box
 let letterMargin = 10;
 
-// Simple utility function to get the width of the board
-function squareWidth() {
-    return boardSize/3;
-}
+//GLOBAL VARIABLES
+// 0 for no winner, 1 for Player1(O), 2 for Player2(X), 3 for Draw
+let gameCondition = 0;
+let player1, player2;
 
+//ENUMERATIONS
 // A Square can have an X, an O, or be blank. Use this enum to denote the state
 let squareStates = {
     BLANK: null, 
@@ -38,10 +39,6 @@ let testGameState = [
 // Uncomment this line to start with the testing game state
 //gameState = testGameState;
 
-// 0 for no winner, 1 for Player1(O), 2 for Player2(X), 3 for Draw
-let gameCondition = 0;
-let player1, player2;
-
 // Constructor for Player Object
 function Player(id, letter) {
     this.id = id;
@@ -54,6 +51,10 @@ function SquareLocation(horizontalPosition, verticalPosition) {
     this.horizontalPosition = horizontalPosition;
     this.verticalPosition = verticalPosition;
 };
+
+// Simple utility function to get the width of the board
+function squareWidth() {
+    return boardSize/3;
 
 // Utility function to get the contect object for the canvas
 function getCanvCtxt() {
@@ -88,7 +89,7 @@ function setUpBoard() {
     ctx.stroke();
 }
 
-//Processes a click from index.html
+//Processes a click, called from index.html
 function processClick(event){
     var c = document.getElementById("myCanvas");
     let ctx = getCanvCtxt();
@@ -202,7 +203,7 @@ function renderState() {
 
 // Call this after any change in the game state to detect a win!
 function checkGameState() {
-    //Wins with top left
+    //Wins overlapping top left
     if(gameState[0][0] != null && (gameState[0][0] == gameState [0][1] == gameState[0][2] || gameState[0][0] == gameState[1][1] == gameState[2][2] || gameState[0][0] == gameState[1][0] == gameState[2][0])){
         if(gameState[0][0] == squareStates.O){
             gameCondition = 1;
@@ -211,7 +212,7 @@ function checkGameState() {
         }
         return;
     }
-    //Wins with middle
+    //Wins overlapping middle
     if(gameState[1][1] != null && (gameState[1][1] == gameState [0][1] == gameState[2][1] || gameState[1][1] == gameState[1][0] == gameState[1][2] || gameState[1][1] == gameState[2][0] == gameState[0][2])){
         if(gameState[1][1] == squareStates.O){
             gameCondition = 1;
@@ -220,7 +221,7 @@ function checkGameState() {
         }
         return;
     }
-    //Wins with bottom right
+    //Wins overlapping bottom right
     if(gameState[2][2] != null && (gameState[0][2] == gameState [1][2] == gameState[2][2] || gameState[2][0] == gameState[2][1] == gameState[2][2])){
         if(gameState[2][2] == squareStates.O){
             gameCondition = 1;
