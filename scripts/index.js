@@ -86,14 +86,38 @@ function setUpBoard() {
     ctx.fill();
 }
 
+function processClick(event){
+    var rect = c.getBoundingClientRect();
+    var posx = event.clientX - rect.left;
+    var posy = event.clientY - rect.top;
+
+}
+
 function drawCircle(event){
     var rect = c.getBoundingClientRect();
     var posx = event.clientX - rect.left;
     var posy = event.clientY - rect.top;
 
+    if(posx < 100){
+        posx = 50;
+    } else if( posx < 200){
+        posx = 150;
+    } else{
+        posx = 250;
+    }
+
+    if(posy < 100){
+        posy = 50;
+    } else if( posy < 200){
+        posy = 150;
+    } else{
+        posy = 250;
+    }
+    
     ctx.fillStyle = "#000000";
     ctx.beginPath();
     ctx.arc(posx, posy, 40, 0, 2 * Math.PI);
+    ctx.stroke();
 }
 
 function drawX(squareLocation) {
