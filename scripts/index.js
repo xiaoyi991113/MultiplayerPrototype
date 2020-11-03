@@ -130,12 +130,14 @@ function processClick(event){
     markSquare(currentPlayer, location);
  
 }
+
 let whoseTurn = 0;
-function counter(){
-    if(whoseTurn%2 == 0){
+
+function counter() {
+    if (whoseTurn % 2 === 0){
         currentPlayer = player1;
     }
-    else{
+    else {
         currentPlayer = player2;
     }
     whoseTurn++;
