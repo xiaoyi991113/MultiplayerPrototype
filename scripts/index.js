@@ -38,8 +38,14 @@ let testGameState = [
 // Uncomment this line to start with the testing game state
 //gameState = testGameState;
 
-// 0 for no winner, 1 for Player1(O), 2 for Player2(X), 3 for Draw
-let gameCondition = 0;
+// 0 for no winner, 1 for O, 2 for X, 3 for Draw
+let WIN_STATES = {
+    NO_WINNER: 0,
+    O_WIN: 1,
+    X_WIN: 2,
+    DRAW: 3
+};
+let winState = WIN_STATES.NO_WINNER;
 let player1, player2;
 
 // Constructor for Player Object
@@ -181,9 +187,24 @@ function makePlayers() {
 
 // Given a player, retrieves that player's letter and draws a square there
 function markSquare(player, squareLocation) {
-    gameState[squareLocation.horizontalPosition][squareLocation.verticalPosition] = player.letter;
-    checkGameState();
-    renderState();
+    if (winState === WIN_STATES.NO_WINNER) {
+        gameState[squareLocation.horizontalPosition][squareLocation.verticalPosition] = player.letter;
+        renderState();
+        checkHandleWin();
+    }
+}
+
+function checkHandleWin() {
+    setWinState();
+    if (winState === WIN_STATES.O_WIN) {
+        alert("O has won!");
+    }
+    else if (winState === WIN_STATES.X_WIN) {
+        alert("X has won!");
+    }
+    else if (winState === WIN_STATES.DRAW) {
+        alert("The match is a draw!");
+    }
 }
 
 // Call this after any state changes. This will draw the X's and O's on the board according to the state
@@ -208,31 +229,31 @@ function renderState() {
 }
 
 // Call this after any change in the game state to detect a win!
-function checkGameState() {
+function setWinState() {
     //Wins with top left
     if(gameState[0][0] != null && (gameState[0][0] == gameState [0][1] == gameState[0][2] || gameState[0][0] == gameState[1][1] == gameState[2][2] || gameState[0][0] == gameState[1][0] == gameState[2][0])){
         if(gameState[0][0] == squareStates.O){
-            gameCondition = 1;
+            winState = WIN_STATES.O_WIN;
         } else{
-            gameCondition = 2;
+            winState = WIN_STATES.X_WIN;
         }
         return;
     }
     //Wins with middle
     if(gameState[1][1] != null && (gameState[1][1] == gameState [0][1] == gameState[2][1] || gameState[1][1] == gameState[1][0] == gameState[1][2] || gameState[1][1] == gameState[2][0] == gameState[0][2])){
         if(gameState[1][1] == squareStates.O){
-            gameCondition = 1;
+            winState = WIN_STATES.O_WIN;
         } else{
-            gameCondition = 2;
+            winState = WIN_STATES.X_WIN;
         }
         return;
     }
     //Wins with bottom right
     if(gameState[2][2] != null && (gameState[0][2] == gameState [1][2] == gameState[2][2] || gameState[2][0] == gameState[2][1] == gameState[2][2])){
         if(gameState[2][2] == squareStates.O){
-            gameCondition = 1;
+            winState = WIN_STATES.O_WIN;
         } else{
-            gameCondition = 2;
+            winState = WIN_STATES.X_WIN;
         }
         return;
     }
@@ -244,7 +265,7 @@ function checkGameState() {
             }
         }
     }
-    gameCondition = 3;
+    winState = WIN_STATES.DRAW;
 }
 
 // When the page is loaded, sets up the game
