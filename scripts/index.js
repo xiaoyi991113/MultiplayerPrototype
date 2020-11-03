@@ -47,7 +47,6 @@ let WIN_STATES = {
     DRAW: 3
 };
 let winState = WIN_STATES.NO_WINNER;
-let player1, player2;
 
 // Constructor for Player Object
 function Player(id, letter) {
