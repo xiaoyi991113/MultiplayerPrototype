@@ -8,8 +8,6 @@ let lineWidth = 1;
 let letterMargin = 10;
 
 //GLOBAL VARIABLES
-// 0 for no winner, 1 for Player1(O), 2 for Player2(X), 3 for Draw
-let gameCondition = 0;
 let player1, player2;
 
 //ENUMERATIONS
