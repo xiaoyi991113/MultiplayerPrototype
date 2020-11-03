@@ -83,16 +83,16 @@ function setUpBoard() {
     let ctx = getCanvCtxt();
 
     // Draw the lines that make up the board itself
-    ctx.moveTo(100, 0);
-    ctx.lineTo(100, 300);
+    ctx.moveTo(squareWidth(), 0);
+    ctx.lineTo(squareWidth(), 3 * squareWidth());
     ctx.moveTo(10,10);
     ctx.lineTo(10,10);
-    ctx.moveTo(200, 0);
-    ctx.lineTo(200, 300);
-    ctx.moveTo(0, 100);
-    ctx.lineTo(300, 100);
-    ctx.moveTo(0, 200);
-    ctx.lineTo(300, 200);
+    ctx.moveTo(2 * squareWidth(), 0);
+    ctx.lineTo(2 * squareWidth(), 3 * squareWidth());
+    ctx.moveTo(0, squareWidth());
+    ctx.lineTo(3 * squareWidth(), squareWidth());
+    ctx.moveTo(0, 2 * squareWidth());
+    ctx.lineTo(3 * squareWidth(), 2 * squareWidth());
 
     ctx.stroke();
 }
