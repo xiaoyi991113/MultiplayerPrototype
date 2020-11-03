@@ -7,11 +7,12 @@ let lineWidth = 1;
 // Margin, in pixels, between the X or O drawn and the boundaries of the box
 let letterMargin = 10;
 
-// Simple utility function to get the width of the board
-function squareWidth() {
-    return boardSize/3;
-}
+//GLOBAL VARIABLES
+// 0 for no winner, 1 for Player1(O), 2 for Player2(X), 3 for Draw
+let gameCondition = 0;
+let player1, player2;
 
+//ENUMERATIONS
 // A Square can have an X, an O, or be blank. Use this enum to denote the state
 let squareStates = {
     BLANK: null, 
@@ -61,6 +62,10 @@ function SquareLocation(horizontalPosition, verticalPosition) {
     this.verticalPosition = verticalPosition;
 };
 
+// Simple utility function to get the width of the board
+function squareWidth() {
+    return boardSize/3;
+
 // Utility function to get the contect object for the canvas
 function getCanvCtxt() {
     var c = document.getElementById("myCanvas");
@@ -94,14 +99,8 @@ function setUpBoard() {
     ctx.stroke();
 }
 
+//Processes a click, called from index.html
 function processClick(event){
-    var rect = c.getBoundingClientRect();
-    var posx = event.clientX - rect.left;
-    var posy = event.clientY - rect.top;
-
-}
-
-function drawCircle(event){
     var c = document.getElementById("myCanvas");
     let ctx = getCanvCtxt();
 
@@ -110,25 +109,24 @@ function drawCircle(event){
     var posy = event.clientY - rect.top;
 
     if(posx < 100){
-        posx = 50;
+        posx = 0;
     } else if( posx < 200){
-        posx = 150;
+        posx = 1;
     } else{
-        posx = 250;
+        posx = 2;
     }
 
     if(posy < 100){
-        posy = 50;
+        posy = 0;
     } else if( posy < 200){
-        posy = 150;
+        posy = 1;
     } else{
-        posy = 250;
+        posy = 2;
     }
-    
-    ctx.fillStyle = "#000000";
-    ctx.beginPath();
-    ctx.arc(posx, posy, 40, 0, 2 * Math.PI);
-    ctx.stroke();
+    var location = new SquareLocation(posx, posy);
+    currentPlayer = counter();
+    markSquare(currentPlayer, location);
+ 
 }
 
 /**
@@ -239,7 +237,7 @@ function setWinState() {
         }
         return;
     }
-    //Wins with middle
+    //Wins overlapping middle
     if(gameState[1][1] != null && (gameState[1][1] == gameState [0][1] == gameState[2][1] || gameState[1][1] == gameState[1][0] == gameState[1][2] || gameState[1][1] == gameState[2][0] == gameState[0][2])){
         if(gameState[1][1] == squareStates.O){
             winState = WIN_STATES.O_WIN;
@@ -248,7 +246,7 @@ function setWinState() {
         }
         return;
     }
-    //Wins with bottom right
+    //Wins overlapping bottom right
     if(gameState[2][2] != null && (gameState[0][2] == gameState [1][2] == gameState[2][2] || gameState[2][0] == gameState[2][1] == gameState[2][2])){
         if(gameState[2][2] == squareStates.O){
             winState = WIN_STATES.O_WIN;
