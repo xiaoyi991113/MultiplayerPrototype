@@ -194,20 +194,27 @@ function markSquare(player, squareLocation) {
     }
 }
 
-function getPlayerFromWinState(A_WIN_STATE) {
-    if (A_WIN_STATE == WIN_STATES.O_WIN
-        && player1.letter) {
+// If a player has won the game, returns that player
+function getWinningPlayer() {
+    if (winState === WIN_STATES.O_WIN){
+        if (player1.letter === squareStates.O)
+            return player1;
+        else if (player2.letter === squareStates.O)
+            return player2;
+    }
+    else if (winState === WIN_STATES.X_WIN) {
+        if (player1.letter === squareStates.X)
+            return player1;
+        else if (player2.letter == squareStates.X)
+            return player2;
     }
 }
 
 // If a win ocurrs, alert the players!
 function checkHandleWin() {
     setWinState();
-    if (winState === WIN_STATES.O_WIN) {
-        alert("O has won!");
-    }
-    else if (winState === WIN_STATES.X_WIN) {
-        alert("X has won!");
+    if (winState === WIN_STATES.O_WIN || winState === WIN_STATES.X_WIN) {
+        alert("Player " + player1.id + " has won!");
     }
     else if (winState === WIN_STATES.DRAW) {
         alert("The match is a draw!");
