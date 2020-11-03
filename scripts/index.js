@@ -130,7 +130,17 @@ function processClick(event){
     markSquare(currentPlayer, location);
  
 }
-
+let whoseTurn = 0;
+function counter(){
+    if(whoseTurn%2 == 0){
+        currentPlayer = player1;
+    }
+    else{
+        currentPlayer = player2;
+    }
+    whoseTurn++;
+    return currentPlayer;
+}
 /**
  * Given a SquareLocation, draws an X in that square
  * @param {SquareLocation} squareLocation the square in which to draw.
