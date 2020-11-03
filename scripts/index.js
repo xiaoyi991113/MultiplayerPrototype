@@ -106,17 +106,17 @@ function processClick(event){
     var posx = event.clientX - rect.left;
     var posy = event.clientY - rect.top;
 
-    if(posx < 100){
+    if(posx < squareWidth()){
         posx = 0;
-    } else if( posx < 200){
+    } else if( posx < 2 * squareWidth()){
         posx = 1;
     } else{
         posx = 2;
     }
 
-    if(posy < 100){
+    if(posy < squareWidth()){
         posy = 0;
-    } else if( posy < 200){
+    } else if( posy < 2 * squareWidth()){
         posy = 1;
     } else{
         posy = 2;
