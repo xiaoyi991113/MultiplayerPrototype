@@ -198,7 +198,7 @@ function makePlayers() {
 // Given a player, retrieves that player's letter and draws a square there
 function markSquare(player, squareLocation) {
     if (winState === WIN_STATES.NO_WINNER) {
-        gameState[squareLocation.horizontalPosition][squareLocation.verticalPosition] = player.letter;
+        gameState[squareLocation.verticalPosition][squareLocation.horizontalPosition] = player.letter;
         renderState();
         checkHandleWin();
     }
