@@ -226,7 +226,8 @@ function getWinningPlayer() {
 function checkHandleWin() {
     setWinState();
     if (winState === WIN_STATES.O_WIN || winState === WIN_STATES.X_WIN) {
-        alert("Player " + player1.id + " has won!");
+        winningPlayer = getWinningPlayer();
+        alert("Player " + winningPlayer.id + " has won!");
     }
     else if (winState === WIN_STATES.DRAW) {
         alert("The match is a draw!");
