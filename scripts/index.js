@@ -258,7 +258,7 @@ function renderState() {
 // Call this after any change in the game state to detect a win!
 function setWinState() {
     //Wins with top left
-    if(gameState[0][0] != null && (gameState[0][0] == gameState [0][1] == gameState[0][2] || gameState[0][0] == gameState[1][1] == gameState[2][2] || gameState[0][0] == gameState[1][0] == gameState[2][0])){
+    if(gameState[0][0] != null && ((gameState[0][0] == gameState [0][1] && gameState[0][0] == gameState[0][2] && gameState[0][1] == gameState[0][2]) || (gameState[0][0] == gameState[1][1] && gameState[0][0] == gameState[2][2] && gameState[1][1] == gameState[2][2]) || (gameState[0][0] == gameState[1][0] && gameState[0][0]== gameState[2][0] && gameState[1][0] == gameState[2][0]))){
         if(gameState[0][0] == squareStates.O){
             winState = WIN_STATES.O_WIN;
         } else{
@@ -267,7 +267,7 @@ function setWinState() {
         return;
     }
     //Wins overlapping middle
-    if(gameState[1][1] != null && (gameState[1][1] == gameState [0][1] == gameState[2][1] || gameState[1][1] == gameState[1][0] == gameState[1][2] || gameState[1][1] == gameState[2][0] == gameState[0][2])){
+    if(gameState[1][1] != null && ((gameState[1][1] == gameState [0][1] && gameState[1][1] == gameState[2][1] && gameState[0][1] == gameState[2][1]) || (gameState[1][1] == gameState[1][0] && gameState[1][1] == gameState[1][2] && gameState[1][0] == gameState[1][2]) || (gameState[1][1] == gameState[2][0] && gameState[1][1]== gameState[0][2] && gameState[2][0] == gameState[0][2]))){
         if(gameState[1][1] == squareStates.O){
             winState = WIN_STATES.O_WIN;
         } else{
@@ -276,7 +276,7 @@ function setWinState() {
         return;
     }
     //Wins overlapping bottom right
-    if(gameState[2][2] != null && (gameState[0][2] == gameState [1][2] == gameState[2][2] || gameState[2][0] == gameState[2][1] == gameState[2][2])){
+    if(gameState[2][2] != null && ((gameState[0][2] == gameState [1][2] && gameState[0][2] == gameState[2][2] && gameState[1][2] == gameState[2][2]) || (gameState[2][0] == gameState[2][1] && gameState[2][0] == gameState[2][2] && gameState[2][0] == gameState [2][2]))){
         if(gameState[2][2] == squareStates.O){
             winState = WIN_STATES.O_WIN;
         } else{
