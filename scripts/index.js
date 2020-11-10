@@ -1,7 +1,7 @@
 // ENUMERATIONS
 // A Square can have an X, an O, or be blank. Use this enum to denote the state
 let squareStates = {
-    BLANK: null, 
+    BLANK: null,
     O: 0,
     X: 1
 };
@@ -66,7 +66,7 @@ function SquareLocation(horizontalPosition, verticalPosition) {
 
 // Simple utility function to get the width of the board
 function squareWidth() {
-    return boardSize/3;
+    return boardSize / 3;
 }
 
 // Utility function to get the contect object for the canvas
@@ -90,8 +90,8 @@ function setUpBoard() {
     // Draw the lines that make up the board itself
     ctx.moveTo(squareWidth(), 0);
     ctx.lineTo(squareWidth(), 3 * squareWidth());
-    ctx.moveTo(10,10);
-    ctx.lineTo(10,10);
+    ctx.moveTo(10, 10);
+    ctx.lineTo(10, 10);
     ctx.moveTo(2 * squareWidth(), 0);
     ctx.lineTo(2 * squareWidth(), 3 * squareWidth());
     ctx.moveTo(0, squareWidth());
@@ -103,7 +103,7 @@ function setUpBoard() {
 }
 
 //Processes a click, called from index.html
-function processClick(event){
+function processClick(event) {
     var c = document.getElementById("myCanvas");
     let ctx = getCanvCtxt();
 
@@ -111,23 +111,23 @@ function processClick(event){
     var posx = event.clientX - rect.left;
     var posy = event.clientY - rect.top;
 
-    if(posx < squareWidth()){
+    if (posx < squareWidth()) {
         posx = 0;
-    } else if( posx < 2 * squareWidth()){
+    } else if (posx < 2 * squareWidth()) {
         posx = 1;
-    } else{
+    } else {
         posx = 2;
     }
 
-    if(posy < squareWidth()){
+    if (posy < squareWidth()) {
         posy = 0;
-    } else if( posy < 2 * squareWidth()){
+    } else if (posy < 2 * squareWidth()) {
         posy = 1;
-    } else{
+    } else {
         posy = 2;
     }
     markSquare(getCurrentPlayer(), new SquareLocation(posx, posy));
- 
+
 }
 
 function getCurrentPlayer() {
@@ -154,22 +154,22 @@ function drawX(squareLocation) {
     ctx.moveTo(
         squareLocation.horizontalPosition * squareWidth() + letterMargin,
         squareLocation.verticalPosition * squareWidth() + letterMargin
-        );
+    );
     ctx.lineTo(
         squareLocation.horizontalPosition * squareWidth() + squareWidth() - letterMargin,
         squareLocation.verticalPosition * squareWidth() + squareWidth() - letterMargin
-        );
+    );
     ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo(
         squareLocation.horizontalPosition * squareWidth() + squareWidth() - letterMargin,
         squareLocation.verticalPosition * squareWidth() + letterMargin
-        );
+    );
     ctx.lineTo(
         squareLocation.horizontalPosition * squareWidth() + letterMargin,
         squareLocation.verticalPosition * squareWidth() + squareWidth() - letterMargin
-        );
+    );
     ctx.stroke();
 }
 
@@ -183,9 +183,9 @@ function drawO(sqLoc) {
 
     ctx.moveTo(sqLoc.horizontalPosition + letterMargin, sqLoc.verticalPosition + letterMargin);
     ctx.arc(
-        sqLoc.horizontalPosition * squareWidth() + squareWidth()/2,
-        sqLoc.verticalPosition * squareWidth() + squareWidth()/2, 
-        (squareWidth() - 2 * letterMargin)/2, 0, 2 * Math.PI);
+        sqLoc.horizontalPosition * squareWidth() + squareWidth() / 2,
+        sqLoc.verticalPosition * squareWidth() + squareWidth() / 2,
+        (squareWidth() - 2 * letterMargin) / 2, 0, 2 * Math.PI);
     ctx.fill();
 }
 
@@ -208,7 +208,7 @@ function markSquare(player, squareLocation) {
 
 // If a player has won the game, returns that player
 function getWinningPlayer() {
-    if (winState === WIN_STATES.O_WIN){
+    if (winState === WIN_STATES.O_WIN) {
         if (player1.letter === squareStates.O)
             return player1;
         else if (player2.letter === squareStates.O)
@@ -258,36 +258,36 @@ function renderState() {
 // Call this after any change in the game state to detect a win!
 function setWinState() {
     //Wins with top left
-    if(gameState[0][0] != null && ((gameState[0][0] == gameState [0][1] && gameState[0][0] == gameState[0][2] && gameState[0][1] == gameState[0][2]) || (gameState[0][0] == gameState[1][1] && gameState[0][0] == gameState[2][2] && gameState[1][1] == gameState[2][2]) || (gameState[0][0] == gameState[1][0] && gameState[0][0]== gameState[2][0] && gameState[1][0] == gameState[2][0]))){
-        if(gameState[0][0] == squareStates.O){
+    if (gameState[0][0] != null && ((gameState[0][0] == gameState[0][1] && gameState[0][0] == gameState[0][2] && gameState[0][1] == gameState[0][2]) || (gameState[0][0] == gameState[1][1] && gameState[0][0] == gameState[2][2] && gameState[1][1] == gameState[2][2]) || (gameState[0][0] == gameState[1][0] && gameState[0][0] == gameState[2][0] && gameState[1][0] == gameState[2][0]))) {
+        if (gameState[0][0] == squareStates.O) {
             winState = WIN_STATES.O_WIN;
-        } else{
+        } else {
             winState = WIN_STATES.X_WIN;
         }
         return;
     }
     //Wins overlapping middle
-    if(gameState[1][1] != null && ((gameState[1][1] == gameState [0][1] && gameState[1][1] == gameState[2][1] && gameState[0][1] == gameState[2][1]) || (gameState[1][1] == gameState[1][0] && gameState[1][1] == gameState[1][2] && gameState[1][0] == gameState[1][2]) || (gameState[1][1] == gameState[2][0] && gameState[1][1]== gameState[0][2] && gameState[2][0] == gameState[0][2]))){
-        if(gameState[1][1] == squareStates.O){
+    if (gameState[1][1] != null && ((gameState[1][1] == gameState[0][1] && gameState[1][1] == gameState[2][1] && gameState[0][1] == gameState[2][1]) || (gameState[1][1] == gameState[1][0] && gameState[1][1] == gameState[1][2] && gameState[1][0] == gameState[1][2]) || (gameState[1][1] == gameState[2][0] && gameState[1][1] == gameState[0][2] && gameState[2][0] == gameState[0][2]))) {
+        if (gameState[1][1] == squareStates.O) {
             winState = WIN_STATES.O_WIN;
-        } else{
+        } else {
             winState = WIN_STATES.X_WIN;
         }
         return;
     }
     //Wins overlapping bottom right
-    if(gameState[2][2] != null && ((gameState[0][2] == gameState [1][2] && gameState[0][2] == gameState[2][2] && gameState[1][2] == gameState[2][2]) || (gameState[2][0] == gameState[2][1] && gameState[2][0] == gameState[2][2] && gameState[2][0] == gameState [2][2]))){
-        if(gameState[2][2] == squareStates.O){
+    if (gameState[2][2] != null && ((gameState[0][2] == gameState[1][2] && gameState[0][2] == gameState[2][2] && gameState[1][2] == gameState[2][2]) || (gameState[2][0] == gameState[2][1] && gameState[2][0] == gameState[2][2] && gameState[2][0] == gameState[2][2]))) {
+        if (gameState[2][2] == squareStates.O) {
             winState = WIN_STATES.O_WIN;
-        } else{
+        } else {
             winState = WIN_STATES.X_WIN;
         }
         return;
     }
     //Checks for draw
-    for(i = 0; i < 3; i++){
-        for(j = 0; j < 3; j++){
-            if(gameState[i][j] != null){
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
+            if (gameState[i][j] != null) {
                 return;
             }
         }
