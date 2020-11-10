@@ -24,6 +24,7 @@ let letterMargin = 10;
 
 //GLOBAL VARIABLES
 let player1, player2;
+let turnCount = 0;
 let winState = WIN_STATES.NO_WINNER;
 
 // This is the official starting state of the game. Everything is blank.
@@ -125,24 +126,21 @@ function processClick(event){
     } else{
         posy = 2;
     }
-    var location = new SquareLocation(posx, posy);
-    currentPlayer = counter();
-    markSquare(currentPlayer, location);
+    markSquare(getCurrentPlayer(), new SquareLocation(posx, posy));
  
 }
 
-let whoseTurn = 0;
-
-function counter() {
-    if (whoseTurn % 2 === 0){
-        currentPlayer = player1;
-    }
-    else {
-        currentPlayer = player2;
-    }
-    whoseTurn++;
-    return currentPlayer;
+function getCurrentPlayer() {
+    if (turnCount % 2 === 0)
+        return player1;
+    else
+        return player2;
 }
+
+function switchPlayers() {
+    turnCount++;
+}
+
 /**
  * Given a SquareLocation, draws an X in that square
  * @param {SquareLocation} squareLocation the square in which to draw.
@@ -199,10 +197,12 @@ function makePlayers() {
 
 // Given a player, retrieves that player's letter and draws a square there
 function markSquare(player, squareLocation) {
-    if (winState === WIN_STATES.NO_WINNER) {
+    if (winState === WIN_STATES.NO_WINNER
+        && gameState[squareLocation.verticalPosition][squareLocation.horizontalPosition] === squareStates.BLANK) {
         gameState[squareLocation.verticalPosition][squareLocation.horizontalPosition] = player.letter;
         renderState();
         checkHandleWin();
+        switchPlayers();
     }
 }
 
