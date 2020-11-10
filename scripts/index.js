@@ -287,7 +287,7 @@ function setWinState() {
     //Checks for draw
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-            if (gameState[i][j] != null) {
+            if (gameState[i][j] === squareStates.BLANK) {
                 return;
             }
         }
