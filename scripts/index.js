@@ -336,22 +336,37 @@ function hitAWSApi() {
         "price": 300.12
     }
 
-    fetch(petsApiBaseUrl + "/pets", {
+    // Reach out to the server and give it your data
+    fetch(
+        // First we pass the URL to post data to
+        petsApiBaseUrl + "/pets", 
+        // These are all of the options for the request (metadata)
+        {
+            // POST means "we're sending data to the server" (generally for it to store)
             method: 'POST',
+            // String representation of the data we are sending
             body: JSON.stringify(newPet),
+            // Extra info that HTTP asks for
             headers: {
+                // "That data that we're sending? Yeah, that's JSON data."
                 'Content-type': 'application/json; charset=UTF-8'
             }
-        }).then(function (response) {
+        })
+        // Check if response indicates success or a failure
+        .then(function (response) {
             if (response.ok) {
                 return response.json();
             }
             else {
                 return Promise.reject(response);
             }
-        }).then(function (data) {
+        })
+        // If success, print out the data to the console
+        .then(function (data) {
             console.log(data);
-        }).catch(function (error) {
+        })
+        // Else if this was a failure, log that to the console.
+        .catch(function (error) {
             console.warn('Something went wrong.', error);
         });
     
