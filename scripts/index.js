@@ -300,6 +300,7 @@ function setWinState() {
 function hitAWSApi() {
     let petsApiBaseUrl = "https://kib50jahdb.execute-api.us-east-2.amazonaws.com/dev";
 
+    /*
     // Call the initial function
     fetch(petsApiBaseUrl + "/pets")
         // When we get a response back from the server, convert it to json
@@ -311,6 +312,50 @@ function hitAWSApi() {
             // Process the response
             console.log(response);
         });
+    */
+    
+    /*
+    let petId = 2;
+
+    // Call the initial function
+    fetch(petsApiBaseUrl + "/pets" + "/" + petId)
+        // When we get a response back from the server, convert it to json
+        .then((response) => {
+            return response.json();
+        })
+        // When we are done converting to json, do something with it
+        .then((response) => {
+            // Process the response
+            console.log(response);
+        });
+    */
+    
+    
+    let newPet = {
+        "type": "bird",
+        "price": 300.12
+    }
+
+    fetch(petsApiBaseUrl + "/pets", {
+            method: 'POST',
+            body: JSON.stringify(newPet),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                return Promise.reject(response);
+            }
+        }).then(function (data) {
+            console.log(data);
+        }).catch(function (error) {
+            console.warn('Something went wrong.', error);
+        });
+    
+
 }
 
 // When the page is loaded, sets up the game
