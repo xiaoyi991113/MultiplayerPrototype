@@ -81,6 +81,8 @@ function setUpGame() {
     makePlayers();
     // TODO: Decide if the state really needs to be rendered here
     renderState();
+
+    hitAWSApi();
 }
 
 // Draws the Tic-Tac-Toe board itself.
@@ -293,6 +295,22 @@ function setWinState() {
         }
     }
     winState = WIN_STATES.DRAW;
+}
+
+function hitAWSApi() {
+    let petsApiBaseUrl = "https://kib50jahdb.execute-api.us-east-2.amazonaws.com/dev";
+
+    // Call the initial function
+    fetch(petsApiBaseUrl + "/pets")
+        // When we get a response back from the server, convert it to json
+        .then((response) => {
+            return response.json();
+        })
+        // When we are done converting to json, do something with it
+        .then((response) => {
+            // Process the response
+            console.log(response);
+        });
 }
 
 // When the page is loaded, sets up the game
