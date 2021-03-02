@@ -373,5 +373,24 @@ function hitAWSApi() {
 
 }
 
+function getBoard() {
+    let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
+
+    let gameId = 'HpXQJUPcN3kQU9DFy-vMGg';
+
+    // Call the initial function
+    fetch(boardApiBaseUrl + "/tictactoe" + "/" + gameId)
+        // When we get a response back from the server, convert it to json
+        .then((response) => {
+            return response.json();
+        })
+        // When we are done converting to json, do something with it
+        .then((response) => {
+            // Process the response
+            console.log(response);
+        });
+
+}
+
 // When the page is loaded, sets up the game
-window.onload = setUpGame();
+window.onload = getBoard();
