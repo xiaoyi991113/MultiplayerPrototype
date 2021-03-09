@@ -396,7 +396,7 @@ function getBoard() {
     };
 
     // Call the initial function
-    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "?gameId=" + gameId3, options)
+    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId3 + "/", options)
         // When we get a response back from the server, convert it to json
         .then((response) => {
             console.log(response);
