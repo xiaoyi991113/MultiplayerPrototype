@@ -374,10 +374,12 @@ function hitAWSApi() {
 }
 
 function getBoard() {
-    let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com/dev";
+    let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
+    let stage = "dev";
 
     let gameId = 'HpXQJUPcN3kQU9DFy-vMGg';
     let gameId2 = '0000';
+    let gameId3 = '1234';
     
     let options = {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -394,9 +396,10 @@ function getBoard() {
     };
 
     // Call the initial function
-    fetch(boardApiBaseUrl + "/tictactoe" + "?gameId=" + gameId, options)
+    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "?gameId=" + gameId3, options)
         // When we get a response back from the server, convert it to json
         .then((response) => {
+            console.log(response);
             return response.json();
         })
         // When we are done converting to json, do something with it
