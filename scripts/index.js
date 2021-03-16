@@ -43,6 +43,38 @@ let testGameState = [
     [squareStates.X, squareStates.BLANK, squareStates.BLANK], // Horizontal row 2
 ];
 
+function saveGameState() {
+    let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com/dev";
+
+    fetch(
+        gameApiBaseUrl + "/tictactoe",
+        {
+            method: 'POST',
+            body: JSON.stringify(gameState),
+            headers: {
+                // "That data that we're sending? Yeah, that's JSON data."
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        }
+    )
+    .then(function (response) {
+        if (response.ok) {
+            return response.json();
+        }
+        else {
+            return Promise.reject(response);
+        }
+    })
+    // If success, print out the data to the console
+    .then(function (data) {
+        console.log(data);
+    })
+    // Else if this was a failure, log that to the console.
+    .catch(function (error) {
+        console.warn('Something went wrong.', error);
+    });
+}
+
 // Uncomment this line to start with the testing game state
 //gameState = testGameState;
 
@@ -81,8 +113,7 @@ function setUpGame() {
     makePlayers();
     // TODO: Decide if the state really needs to be rendered here
     renderState();
-
-    hitAWSApi();
+    saveGameState();
 }
 
 // Draws the Tic-Tac-Toe board itself.
@@ -297,81 +328,6 @@ function setWinState() {
     winState = WIN_STATES.DRAW;
 }
 
-function hitAWSApi() {
-    let petsApiBaseUrl = "https://kib50jahdb.execute-api.us-east-2.amazonaws.com/dev";
-
-    /*
-    // Call the initial function
-    fetch(petsApiBaseUrl + "/pets")
-        // When we get a response back from the server, convert it to json
-        .then((response) => {
-            return response.json();
-        })
-        // When we are done converting to json, do something with it
-        .then((response) => {
-            // Process the response
-            console.log(response);
-        });
-    */
-    
-    /*
-    let petId = 2;
-
-    // Call the initial function
-    fetch(petsApiBaseUrl + "/pets" + "/" + petId)
-        // When we get a response back from the server, convert it to json
-        .then((response) => {
-            return response.json();
-        })
-        // When we are done converting to json, do something with it
-        .then((response) => {
-            // Process the response
-            console.log(response);
-        });
-    */
-    
-    
-    let newPet = {
-        "type": "bird",
-        "price": 300.12
-    }
-
-    // Reach out to the server and give it your data
-    fetch(
-        // First we pass the URL to post data to
-        petsApiBaseUrl + "/pets", 
-        // These are all of the options for the request (metadata)
-        {
-            // POST means "we're sending data to the server" (generally for it to store)
-            method: 'POST',
-            // String representation of the data we are sending
-            body: JSON.stringify(newPet),
-            // Extra info that HTTP asks for
-            headers: {
-                // "That data that we're sending? Yeah, that's JSON data."
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        // Check if response indicates success or a failure
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-            else {
-                return Promise.reject(response);
-            }
-        })
-        // If success, print out the data to the console
-        .then(function (data) {
-            console.log(data);
-        })
-        // Else if this was a failure, log that to the console.
-        .catch(function (error) {
-            console.warn('Something went wrong.', error);
-        });
-    
-
-}
 
 function getBoard() {
     let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";

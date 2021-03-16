@@ -18,12 +18,11 @@ var ddb = new AWS.DynamoDB({
     
 });
 
-// "main" function
 exports.handler = (event, context, callback) => {
-    
-    console.log('Received event (', event.gameId, '): ', event);
+    gameId = event['pathParameters']['gameid']
+    console.log('Received event (', gameId, '): ', event);
 
-    readState(event.gameId, context, callback);
+    readState(gameId, context, callback);
 };
 
 function readState(gameId, context, callback) {
@@ -33,9 +32,8 @@ function readState(gameId, context, callback) {
     var params = {
       TableName: 'GameState',
       Key: {
-        'GameId': {S: 'wMz_lI5VAxJgN8PECT_yFw'}
-      },
-      ProjectionExpression: ''
+        'GameId': {S: gameId}
+      }
     };
     
     ddb.getItem(params, 
