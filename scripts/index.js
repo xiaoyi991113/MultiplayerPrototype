@@ -34,9 +34,7 @@ let gameState = [
     [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK], // Horizontal row 1
     [squareStates.BLANK, squareStates.BLANK, squareStates.BLANK], // Horizontal row 2
 ];
-function hitAWSApi() {
-        let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com/dev";
-}
+
 // Here's a testing game state with some X's and O's filled in.
 let testGameState = [
     // Column 0          Column 1            Column 2
@@ -44,33 +42,38 @@ let testGameState = [
     [squareStates.O, squareStates.X, squareStates.BLANK], // Horizontal row 1
     [squareStates.X, squareStates.BLANK, squareStates.BLANK], // Horizontal row 2
 ];
-fetch(
-    gameApiBaseUrl+"/tictactoe",
-    {
-        method: 'POST',
-        body: JSON.stringify(gameState),
-        headers: {
-            // "That data that we're sending? Yeah, that's JSON data."
-            'Content-type': 'application/json; charset=UTF-8'
+
+function hitAWSApi() {
+    let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com/dev";
+
+    fetch(
+        gameApiBaseUrl + "/tictactoe",
+        {
+            method: 'POST',
+            body: JSON.stringify(gameState),
+            headers: {
+                // "That data that we're sending? Yeah, that's JSON data."
+                'Content-type': 'application/json; charset=UTF-8'
+            }
         }
-    }
-)
-.then(function (response) {
-    if (response.ok) {
-        return response.json();
-    }
-    else {
-        return Promise.reject(response);
-    }
-})
-// If success, print out the data to the console
-.then(function (data) {
-    console.log(data);
-})
-// Else if this was a failure, log that to the console.
-.catch(function (error) {
-    console.warn('Something went wrong.', error);
-});
+    )
+    .then(function (response) {
+        if (response.ok) {
+            return response.json();
+        }
+        else {
+            return Promise.reject(response);
+        }
+    })
+    // If success, print out the data to the console
+    .then(function (data) {
+        console.log(data);
+    })
+    // Else if this was a failure, log that to the console.
+    .catch(function (error) {
+        console.warn('Something went wrong.', error);
+    });
+}
 
 // Uncomment this line to start with the testing game state
 //gameState = testGameState;
