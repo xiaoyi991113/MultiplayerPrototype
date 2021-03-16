@@ -380,6 +380,7 @@ function getBoard() {
     let gameId = 'HpXQJUPcN3kQU9DFy-vMGg';
     let gameId2 = '0000';
     let gameId3 = '1234';
+    let response = null;
     
     let options = {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -394,21 +395,38 @@ function getBoard() {
         referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         //body: JSON.stringify(data) // body data type must match "Content-Type" header
     };
+    response = updateBoard(boardApiBaseUrl, stage, gameId3, options);
 
-    // Call the initial function
-    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId3 + "/", options)
+}
+
+function updateBoard(boardApiBaseUrl, stage, gameId, options)
+{
+    let prevState = null;
+    let currState = null;
+    let isOldState = true;
+   // while (isOldState) {
+        // Call the initial function
+        fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
         // When we get a response back from the server, convert it to json
         .then((response) => {
             console.log(response);
-            return response.json();
+            if (currState === null) {
+                currState = response.json();
+            } else {
+                prevState = currState;
+                currState = response.json();
+            }
+            if (prevState !== null && currState != prevState) isOldState = false;
         })
         // When we are done converting to json, do something with it
         .then((response) => {
             // Process the response
             console.log(response);
         });
-
+   // }
+   console.log("current state: " + currState);
+    return currState;
 }
 
 // When the page is loaded, sets up the game
-window.onload = setUpGame();
+window.onload = getBoard();
