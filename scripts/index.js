@@ -57,22 +57,22 @@ function saveGameState() {
             }
         }
     )
-    .then(function (response) {
-        if (response.ok) {
-            return response.json();
-        }
-        else {
-            return Promise.reject(response);
-        }
-    })
-    // If success, print out the data to the console
-    .then(function (data) {
-        console.log(data);
-    })
-    // Else if this was a failure, log that to the console.
-    .catch(function (error) {
-        console.warn('Something went wrong.', error);
-    });
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                return Promise.reject(response);
+            }
+        })
+        // If success, print out the data to the console
+        .then(function (data) {
+            console.log(data);
+        })
+        // Else if this was a failure, log that to the console.
+        .catch(function (error) {
+            console.warn('Something went wrong.', error);
+        });
 }
 
 // Uncomment this line to start with the testing game state
@@ -337,10 +337,13 @@ function getBoard() {
     let gameId2 = '0000';
     let gameId3 = '1234';
     let response = null;
-    
+
     let options = {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
+        // So apparently chrome makes the response body opaque if you specify no-cors. Anyways this works without specifying a cors mode. 
+        // https://stackoverflow.com/questions/36840396/fetch-gives-an-empty-response-body
+        //mode: 'no-cors', // no-cors, *cors, same-origin
+        dataType: 'text',
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
@@ -355,32 +358,34 @@ function getBoard() {
 
 }
 
-function updateBoard(boardApiBaseUrl, stage, gameId, options)
-{
+function updateBoard(boardApiBaseUrl, stage, gameId, options) {
     let prevState = null;
     let currState = null;
     let isOldState = true;
-   // while (isOldState) {
-        // Call the initial function
-        fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
+    // while (isOldState) {
+    // Call the initial function
+    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
         // When we get a response back from the server, convert it to json
-        .then((response) => {
-            console.log(response);
+        .then(
+            function(response) {
+                return response.json()
+            }
+        )
+        // When we are done converting to json, do something with it
+        .then((responseAsJson) => {
+            console.log(responseAsJson);
+
+            // Process the response
             if (currState === null) {
-                currState = response.json();
+                currState = responseAsJson;
             } else {
                 prevState = currState;
-                currState = response.json();
+                currState = responseAsJson;
             }
             if (prevState !== null && currState != prevState) isOldState = false;
-        })
-        // When we are done converting to json, do something with it
-        .then((response) => {
-            // Process the response
-            console.log(response);
         });
-   // }
-   console.log("current state: " + currState);
+    //}
+    //console.log("current state: " + currState);
     return currState;
 }
 
