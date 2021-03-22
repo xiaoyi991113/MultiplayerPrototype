@@ -44,19 +44,28 @@ let testGameState = [
 ];
 
 function saveGameState() {
-    let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com/dev";
+    let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
+    let stage = "dev"
+    let testGameId = "1234"
 
-    fetch(
-        gameApiBaseUrl + "/tictactoe",
-        {
-            method: 'POST',
-            body: JSON.stringify(gameState),
-            headers: {
-                // "That data that we're sending? Yeah, that's JSON data."
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        }
-    )
+    let options = {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        // So apparently chrome makes the response body opaque if you specify no-cors. Anyways this works without specifying a cors mode. 
+        // https://stackoverflow.com/questions/36840396/fetch-gives-an-empty-response-body
+        //mode: 'no-cors', // no-cors, *cors, same-origin
+        dataType: 'json',
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(gameState) // body data type must match "Content-Type" header
+    };
+
+    fetch(gameApiBaseUrl + "/" + stage + "/" + "tictactoe" + "/" + testGameId, options)
         .then(function (response) {
             if (response.ok) {
                 return response.json();
@@ -390,4 +399,4 @@ function updateBoard(boardApiBaseUrl, stage, gameId, options) {
 }
 
 // When the page is loaded, sets up the game
-window.onload = getBoard();
+window.onload = saveGameState();
