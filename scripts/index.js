@@ -1,3 +1,5 @@
+let gameId = '1234';
+let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
 // ENUMERATIONS
 // A Square can have an X, an O, or be blank. Use this enum to denote the state
 let squareStates = {
@@ -44,7 +46,7 @@ let testGameState = [
 ];
 
 function saveGameState() {
-    let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
+    // let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
     let stage = "dev"
     let testGameId = "1234"
 
@@ -65,7 +67,7 @@ function saveGameState() {
         body: JSON.stringify(gameState) // body data type must match "Content-Type" header
     };
 
-    fetch(gameApiBaseUrl + "/" + stage + "/" + "tictactoe" + "/" + testGameId, options)
+    fetch(boardApiBaseUrl + "/" + stage + "/" + "tictactoe" + "/" + testGameId, options)
         .then(function (response) {
             if (response.ok) {
                 return response.json();
@@ -340,13 +342,13 @@ function setWinState() {
 
 
 function getBoard() {
-    let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
+    // let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
     let stage = "dev";
-
-    let gameId = 'HpXQJUPcN3kQU9DFy-vMGg';
-    let gameId2 = '0000';
-    let gameId3 = '1234';
-    let response = null;
+    
+    // let gameId = 'HpXQJUPcN3kQU9DFy-vMGg';
+    // let gameId2 = '0000';
+    // let gameId3 = '1234';
+     let response = null;
 
     let options = {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -364,7 +366,7 @@ function getBoard() {
         referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         //body: JSON.stringify(data) // body data type must match "Content-Type" header
     };
-    response = updateBoard(boardApiBaseUrl, stage, gameId3, options);
+    response = updateBoard(boardApiBaseUrl, stage, gameId, options);
 
 }
 
