@@ -379,23 +379,19 @@ function checkUpdateGameState() {
         )
         // When we are done converting to json, do something with it
         .then((responseAsJson) => {
-            console.log(responseAsJson);
-            setTimeout(checkUpdateGameState, 1000)
-            /*
+            boardString = responseAsJson.Item.Board.S;
+            boardFromServer = JSON.parse(boardString);
+
+            console.log(boardFromServer);
+
             // Process the response
-            if (gameState !== responseAsJson) {
-                gameState = responseAsJson
+            if (gameState !== boardFromServer) {
+                gameState = boardFromServer;
             }
             else {
                 setTimeout(checkUpdateGameState, 1000)
             }
-            */
         });
-}
-
-function convertAWSJSONtoNormalJSON(awsBoardGameState) {
-    normalJSONBoardState = {};
-    return normalJSONBoardState;
 }
 
 // When the page is loaded, sets up the game
