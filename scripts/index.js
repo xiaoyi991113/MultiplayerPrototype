@@ -77,6 +77,9 @@ function saveGameState() {
         // If success, print out the data to the console
         .then(function (data) {
             console.log(data);
+
+            // Now that we have saved off our player's move, hit the server to look for the other player's move
+            lookForOtherPlayerMove();
         })
         // Else if this was a failure, log that to the console.
         .catch(function (error) {
@@ -338,7 +341,8 @@ function setWinState() {
 }
 
 
-function getBoard() {
+// Sets up the options and calls the function to check for and update the game state
+function lookForOtherPlayerMove() {
     let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
     let stage = "dev";
 
@@ -363,39 +367,44 @@ function getBoard() {
         referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         //body: JSON.stringify(data) // body data type must match "Content-Type" header
     };
-    response = updateBoard(boardApiBaseUrl, stage, gameId3, options);
-
+    checkUpdateGameState(boardApiBaseUrl, stage, gameId3, options);
 }
 
-function updateBoard(boardApiBaseUrl, stage, gameId, options) {
+function checkUpdateGameState(boardApiBaseUrl, stage, gameId, options) {
     let prevState = null;
     let currState = null;
     let isOldState = true;
-    // while (isOldState) {
-    // Call the initial function
-    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
-        // When we get a response back from the server, convert it to json
-        .then(
-            function(response) {
-                return response.json()
-            }
-        )
-        // When we are done converting to json, do something with it
-        .then((responseAsJson) => {
-            console.log(responseAsJson);
+    
+    while (isOldState) {
+        // Call the initial function
+        fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
+            // When we get a response back from the server, convert it to json
+            .then(
+                function(response) {
+                    return response.json()
+                }
+            )
+            // When we are done converting to json, do something with it
+            .then((responseAsJson) => {
+                console.log(responseAsJson);
 
-            // Process the response
-            if (currState === null) {
-                currState = responseAsJson;
-            } else {
-                prevState = currState;
-                currState = responseAsJson;
-            }
-            if (prevState !== null && currState != prevState) isOldState = false;
-        });
-    //}
+                // Process the response
+                if (currState === null) {
+                    currState = responseAsJson;
+                } else {
+                    prevState = currState;
+                    currState = responseAsJson;
+                }
+                if (prevState !== null && currState != prevState) isOldState = false;
+            });
+    }
     //console.log("current state: " + currState);
     return currState;
+}
+
+function convertAWSJSONtoNormalJSON(awsBoardGameState) {
+    normalJSONBoardState = {};
+    return normalJSONBoardState;
 }
 
 // When the page is loaded, sets up the game
