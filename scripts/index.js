@@ -242,6 +242,7 @@ function markSquare(player, squareLocation) {
     if (winState === WIN_STATES.NO_WINNER
         && gameState[squareLocation.verticalPosition][squareLocation.horizontalPosition] === squareStates.BLANK) {
         gameState[squareLocation.verticalPosition][squareLocation.horizontalPosition] = player.letter;
+        saveGameState();
         renderState();
         checkHandleWin();
         switchPlayers();
