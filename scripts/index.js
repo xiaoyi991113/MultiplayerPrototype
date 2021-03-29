@@ -399,4 +399,4 @@ function updateBoard(boardApiBaseUrl, stage, gameId, options) {
 }
 
 // When the page is loaded, sets up the game
-window.onload = saveGameState();
+window.onload = setUpGame();
