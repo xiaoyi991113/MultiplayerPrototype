@@ -1,5 +1,7 @@
 let gameId = '1234';
 let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
+let stage = "dev";
+
 // ENUMERATIONS
 // A Square can have an X, an O, or be blank. Use this enum to denote the state
 let squareStates = {
@@ -346,13 +348,10 @@ function setWinState() {
 
 // Sets up the options and calls the function to check for and update the game state
 function lookForOtherPlayerMove() {
-    let stage = "dev";
-    
-    // let gameId = 'HpXQJUPcN3kQU9DFy-vMGg';
-    // let gameId2 = '0000';
-    // let gameId3 = '1234';
-     let response = null;
+    checkUpdateGameState();
+}
 
+function checkUpdateGameState() {
     let options = {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         // So apparently chrome makes the response body opaque if you specify no-cors. Anyways this works without specifying a cors mode. 
@@ -369,39 +368,29 @@ function lookForOtherPlayerMove() {
         referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         //body: JSON.stringify(data) // body data type must match "Content-Type" header
     };
-    checkUpdateGameState(boardApiBaseUrl, stage, gameId, options);
-}
 
-function checkUpdateGameState(boardApiBaseUrl, stage, gameId, options) {
-    let prevState = null;
-    let currState = null;
-    let isOldState = true;
-
-    while (isOldState) {
-        // Call the initial function
-        fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
-            // When we get a response back from the server, convert it to json
-            .then(
-                function(response) {
-                    return response.json()
-                }
-            )
-            // When we are done converting to json, do something with it
-            .then((responseAsJson) => {
-                console.log(responseAsJson);
-
-                // Process the response
-                if (currState === null) {
-                    currState = responseAsJson;
-                } else {
-                    prevState = currState;
-                    currState = responseAsJson;
-                }
-                if (prevState !== null && currState != prevState) isOldState = false;
-            });
-    }
-    //console.log("current state: " + currState);
-    return currState;
+    // Call the initial function
+    fetch(boardApiBaseUrl + "/" + stage + "/tictactoe" + "/" + gameId + "/", options)
+        // When we get a response back from the server, convert it to json
+        .then(
+            function(response) {
+                return response.json()
+            }
+        )
+        // When we are done converting to json, do something with it
+        .then((responseAsJson) => {
+            console.log(responseAsJson);
+            setTimeout(checkUpdateGameState, 1000)
+            /*
+            // Process the response
+            if (gameState !== responseAsJson) {
+                gameState = responseAsJson
+            }
+            else {
+                setTimeout(checkUpdateGameState, 1000)
+            }
+            */
+        });
 }
 
 function convertAWSJSONtoNormalJSON(awsBoardGameState) {
