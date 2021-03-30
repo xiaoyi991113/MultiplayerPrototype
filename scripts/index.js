@@ -389,7 +389,7 @@ function checkUpdateGameState() {
             console.log(boardFromServer);
 
             // Process the response
-            if (gameState !== boardFromServer) {
+            if (compareStates(gameState, boardFromServer)) {
                 gameState = boardFromServer;
                 // player switch to be your turn
                 switchPlayers();
@@ -398,6 +398,17 @@ function checkUpdateGameState() {
                 setTimeout(checkUpdateGameState, 1000)
             }
         });
+}
+
+function compareStates(gameState, boardFromServer){
+    for(i = 0; i < 3; i++){
+        for(j = 0; j < 3; j++){
+            if(gameState[i][j] === boardFromServer[i][j]){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 // When the page is loaded, sets up the game
