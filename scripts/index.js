@@ -385,7 +385,7 @@ function checkUpdateGameState() {
             console.log(boardFromServer);
 
             // Process the response
-            if (gameState !== boardFromServer) {
+            if (compareStates(gameState, boardFromServer)) {
                 gameState = boardFromServer;
             }
             else {
