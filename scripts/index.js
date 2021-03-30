@@ -1,4 +1,6 @@
 let gameId = '1234';
+//player 1: x, player 2: 0
+let player = 1;
 let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
 let stage = "dev";
 
@@ -153,30 +155,32 @@ function setUpBoard() {
 
 //Processes a click, called from index.html
 function processClick(event) {
-    var c = document.getElementById("myCanvas");
-    let ctx = getCanvCtxt();
-
-    var rect = c.getBoundingClientRect();
-    var posx = event.clientX - rect.left;
-    var posy = event.clientY - rect.top;
-
-    if (posx < squareWidth()) {
-        posx = 0;
-    } else if (posx < 2 * squareWidth()) {
-        posx = 1;
-    } else {
-        posx = 2;
+    //player 1 moves on odd turns, player 2 moves on even turns
+    if ((player == 1 && turnCount % 2 != 0) || (player == 2 && turnCount % 2 == 0)) {
+        var c = document.getElementById("myCanvas");
+        let ctx = getCanvCtxt();
+    
+        var rect = c.getBoundingClientRect();
+        var posx = event.clientX - rect.left;
+        var posy = event.clientY - rect.top;
+    
+        if (posx < squareWidth()) {
+            posx = 0;
+        } else if (posx < 2 * squareWidth()) {
+            posx = 1;
+        } else {
+            posx = 2;
+        }
+    
+        if (posy < squareWidth()) {
+            posy = 0;
+        } else if (posy < 2 * squareWidth()) {
+            posy = 1;
+        } else {
+            posy = 2;
+        }
+        markSquare(getCurrentPlayer(), new SquareLocation(posx, posy));
     }
-
-    if (posy < squareWidth()) {
-        posy = 0;
-    } else if (posy < 2 * squareWidth()) {
-        posy = 1;
-    } else {
-        posy = 2;
-    }
-    markSquare(getCurrentPlayer(), new SquareLocation(posx, posy));
-
 }
 
 function getCurrentPlayer() {
@@ -387,6 +391,8 @@ function checkUpdateGameState() {
             // Process the response
             if (gameState !== boardFromServer) {
                 gameState = boardFromServer;
+                // player switch to be your turn
+                switchPlayers();
             }
             else {
                 setTimeout(checkUpdateGameState, 1000)
