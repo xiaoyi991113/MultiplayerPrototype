@@ -1,6 +1,6 @@
 let gameId = '1234';
-//player 1: x, player 2: 0
-let player = 1;
+//player 1: x, player 2: O
+let player = 2;
 let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
 let stage = "dev";
 
@@ -82,7 +82,7 @@ function saveGameState() {
         })
         // If success, print out the data to the console
         .then(function (data) {
-            console.log("Saved Game State");
+            console.log("Saved Game State, server response: ");
             console.log(data);
 
             // Now that we have saved off our player's move, hit the server to look for the other player's move
@@ -132,7 +132,7 @@ function setUpGame() {
     makePlayers();
     // TODO: Decide if the state really needs to be rendered here
     renderState();
-    saveGameState();
+    //saveGameState();
 }
 
 // Draws the Tic-Tac-Toe board itself.
@@ -181,6 +181,9 @@ function processClick(event) {
             posy = 2;
         }
         markSquare(getCurrentPlayer(), new SquareLocation(posx, posy));
+    }
+    else {
+        console.log("It is not your turn, you are player " + player + " and it is turn " + turnCount)
     }
 }
 
@@ -395,6 +398,7 @@ function checkUpdateGameState() {
                 gameState = boardFromServer;
                 // player switch to be your turn
                 switchPlayers();
+                console.log("board was different");
             }
             else {
                 setTimeout(checkUpdateGameState, 1000)
