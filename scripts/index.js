@@ -403,12 +403,12 @@ function checkUpdateGameState() {
 function compareStates(gameState, boardFromServer){
     for(i = 0; i < 3; i++){
         for(j = 0; j < 3; j++){
-            if(gameState[i][j] === boardFromServer[i][j]){
-                return true;
+            if(gameState[i][j] !== boardFromServer[i][j]){
+                return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 // When the page is loaded, sets up the game
