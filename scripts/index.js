@@ -398,13 +398,14 @@ function checkUpdateGameState() {
                 gameState = boardFromServer;
                 // player switch to be your turn
                 switchPlayers();
-                console.log("board was different");
+                console.log("board was same");
                 console.log(gameState);
                 console.log(boardFromServer);
             }
             else {
                 setTimeout(checkUpdateGameState, 1000)
-                console.log("board was same");
+                console.log("board was different");
+                
             }
         });
 }
