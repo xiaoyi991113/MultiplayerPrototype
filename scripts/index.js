@@ -82,6 +82,7 @@ function saveGameState() {
         })
         // If success, print out the data to the console
         .then(function (data) {
+            console.log("Saved Game State");
             console.log(data);
 
             // Now that we have saved off our player's move, hit the server to look for the other player's move
@@ -296,14 +297,14 @@ function renderState() {
                 // cIndex is horizontal position because it's the number of columns over
                 // rIndex is vertical position because it's the number of rows down
                 drawX(new SquareLocation(cIndex, rIndex));
-                console.log(rIndex + ", " + cIndex + " is X");
+                //console.log(rIndex + ", " + cIndex + " is X");
             }
             else if (gameState[rIndex][cIndex] === squareStates.O) {
                 drawO(new SquareLocation(cIndex, rIndex));
-                console.log(rIndex + ", " + cIndex + " is O");
+                //console.log(rIndex + ", " + cIndex + " is O");
             }
             else {
-                console.log(rIndex + ", " + cIndex + " is empty");
+                //console.log(rIndex + ", " + cIndex + " is empty");
             }
         }
     }
@@ -386,16 +387,18 @@ function checkUpdateGameState() {
             boardString = responseAsJson.Item.Board.S;
             boardFromServer = JSON.parse(boardString);
 
+            console.log("Fetched board");
             console.log(boardFromServer);
 
             // Process the response
-            if (compareStates(gameState, boardFromServer)) {
+            if (compareStates(gameState, boardFromServer) === true) {
                 gameState = boardFromServer;
                 // player switch to be your turn
                 switchPlayers();
             }
             else {
                 setTimeout(checkUpdateGameState, 1000)
+                console.log("board was same");
             }
         });
 }
