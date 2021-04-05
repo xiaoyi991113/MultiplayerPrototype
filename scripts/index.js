@@ -399,6 +399,8 @@ function checkUpdateGameState() {
                 // player switch to be your turn
                 switchPlayers();
                 console.log("board was different");
+                console.log(gameState);
+                console.log(boardFromServer);
             }
             else {
                 setTimeout(checkUpdateGameState, 1000)
@@ -408,9 +410,9 @@ function checkUpdateGameState() {
 }
 
 function compareStates(gameState, boardFromServer){
-    for(i = 0; i < 3; i++){
-        for(j = 0; j < 3; j++){
-            if(gameState[i][j] !== boardFromServer[i][j]){
+    for(let rowIndex = 0; rowIndex < 3; rowIndex++){
+        for(let colIndex = 0; colIndex < 3; colIndex++){
+            if(gameState[rowIndex][colIndex] !== boardFromServer[rowIndex][colIndex]){
                 return false;
             }
         }
