@@ -86,7 +86,7 @@ function saveGameState() {
             console.log(data);
 
             // Now that we have saved off our player's move, hit the server to look for the other player's move
-            lookForOtherPlayerMove();
+            checkUpdateGameState();
         })
         // Else if this was a failure, log that to the console.
         .catch(function (error) {
@@ -132,7 +132,7 @@ function setUpGame() {
     makePlayers();
     // TODO: Decide if the state really needs to be rendered here
     renderState();
-    //saveGameState();
+    checkUpdateGameState();
 }
 
 // Draws the Tic-Tac-Toe board itself.
@@ -355,10 +355,6 @@ function setWinState() {
 
 
 // Sets up the options and calls the function to check for and update the game state
-function lookForOtherPlayerMove() {
-    checkUpdateGameState();
-}
-
 function checkUpdateGameState() {
     let options = {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
