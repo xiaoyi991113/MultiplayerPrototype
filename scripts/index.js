@@ -410,10 +410,16 @@ function checkUpdateGameState() {
         });
 }
 
-function compareStates(gameState, boardFromServer){
-    for(let rowIndex = 0; rowIndex < 3; rowIndex++){
-        for(let colIndex = 0; colIndex < 3; colIndex++){
-            if(gameState[rowIndex][colIndex] !== boardFromServer[rowIndex][colIndex]){
+function compareStates(gameState, boardFromServer) {
+    console.log("compareStates was Called");
+    for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
+        for (let colIndex = 0; colIndex < 3; colIndex++) {
+            console.log(rowIndex + ", " + colIndex);
+            if (gameState[rowIndex][colIndex] !== boardFromServer[rowIndex][colIndex]) {
+                
+                console.log(gameState[rowIndex][colIndex]);
+                console.log(boardFromServer[rowIndex][colIndex]);
+
                 return false;
             }
         }
