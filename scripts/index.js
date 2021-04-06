@@ -1,5 +1,5 @@
-let gameId = '98562';
-//player 1: x, player 2: O
+let gameId = '98563';
+//player 1: O, player 2: X
 let player = 2;
 let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
 let stage = "dev";
