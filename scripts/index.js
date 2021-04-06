@@ -1,4 +1,4 @@
-let gameId = '1234';
+let gameId = '98562';
 //player 1: x, player 2: O
 let player = 2;
 let boardApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
@@ -50,9 +50,6 @@ let testGameState = [
 ];
 
 function saveGameState() {
-    // let gameApiBaseUrl = "https://6f6qdmvc88.execute-api.us-east-2.amazonaws.com";
-    let stage = "dev"
-    let testGameId = "1234"
 
     let options = {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -71,7 +68,7 @@ function saveGameState() {
         body: JSON.stringify(gameState) // body data type must match "Content-Type" header
     };
 
-    fetch(boardApiBaseUrl + "/" + stage + "/" + "tictactoe" + "/" + testGameId, options)
+    fetch(boardApiBaseUrl + "/" + stage + "/" + "tictactoe" + "/" + gameId, options)
         .then(function (response) {
             if (response.ok) {
                 return response.json();
