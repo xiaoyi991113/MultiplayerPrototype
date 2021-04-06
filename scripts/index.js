@@ -151,10 +151,15 @@ function setUpBoard() {
     ctx.stroke();
 }
 
+function isMyTurn(){
+    if ((player == 1 && turnCount % 2 != 0) || (player == 2 && turnCount % 2 == 0)) return true;
+    return false;
+}
+
 //Processes a click, called from index.html
 function processClick(event) {
     //player 1 moves on odd turns, player 2 moves on even turns
-    if ((player == 1 && turnCount % 2 != 0) || (player == 2 && turnCount % 2 == 0)) {
+    if (isMyTurn()) {
         var c = document.getElementById("myCanvas");
         let ctx = getCanvCtxt();
     
