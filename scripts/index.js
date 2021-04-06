@@ -390,32 +390,26 @@ function checkUpdateGameState() {
             console.log(boardFromServer);
 
             // Process the response
-            if (compareStates(gameState, boardFromServer) === true) {
+            if (compareStates(gameState, boardFromServer)) {
+                setTimeout(checkUpdateGameState, 1000)
+                console.log("board was the same");
+            }
+            else {
                 gameState = boardFromServer;
                 // player switch to be your turn
                 switchPlayers();
-                console.log("board was same");
+                console.log("board was different");
                 console.log(gameState);
                 console.log(boardFromServer);
-            }
-            else {
-                setTimeout(checkUpdateGameState, 1000)
-                console.log("board was different");
                 
             }
         });
 }
 
 function compareStates(gameState, boardFromServer) {
-    console.log("compareStates was Called");
     for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
         for (let colIndex = 0; colIndex < 3; colIndex++) {
-            console.log(rowIndex + ", " + colIndex);
             if (gameState[rowIndex][colIndex] !== boardFromServer[rowIndex][colIndex]) {
-                
-                console.log(gameState[rowIndex][colIndex]);
-                console.log(boardFromServer[rowIndex][colIndex]);
-
                 return false;
             }
         }
