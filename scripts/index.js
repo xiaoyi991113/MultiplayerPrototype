@@ -395,12 +395,15 @@ function checkUpdateGameState() {
                 console.log("board was the same");
             }
             else {
+                console.log("board was different");
+                
+                // Update and rerender the board
                 gameState = boardFromServer;
+                renderState();
+                
                 // player switch to be your turn
                 switchPlayers();
-                console.log("board was different");
-                console.log(gameState);
-                console.log(boardFromServer);
+                
                 
             }
         });
