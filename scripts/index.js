@@ -406,6 +406,9 @@ function checkUpdateGameState() {
                 // player switch to be your turn
                 switchPlayers();
                 
+                if (!isMyTurn()) {
+                    setTimeout(checkUpdateGameState, 1000);
+                }
                 
             }
         });
